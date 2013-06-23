@@ -48,7 +48,7 @@ class Minify extends CMSModule {
 
 	function GetName() 					{ return 'Minify'; } 
 	function GetFriendlyName() 			{ return $this->Lang('friendlyname'); } 
-	function GetVersion() 				{ return '0.9'; } 
+	function GetVersion() 				{ return '0.9.1'; } 
 	function GetHelp() 					{ return $this->Lang('help'); } 
 	function GetAuthor() 				{ return 'Mike Crowe'; } 
 	function GetAuthorEmail() 			{ return 'drmikecrowe@gmail.com'; } 
