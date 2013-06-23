@@ -2,7 +2,7 @@
 
 #-------------------------------------------------------------------------
 # Module: Minify - Javascript and CSS minifier using https://github.com/mrclay/minify
-# Version: 0,9, Mike Crowe
+# Version: 0.9, Mike Crowe
 #
 #-------------------------------------------------------------------------
 # CMS - CMS Made Simple is (c) 2013 by Ted Kulp (wishy@cmsmadesimple.org)
@@ -12,193 +12,52 @@
 # Copyright (c) 2013 by Samuel Goldstein (sjg@cmsmadesimple.org) 
 #
 #-------------------------------------------------------------------------
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-# Or read it online: http://www.gnu.org/licenses/licenses.html#GPL
-#
-#-------------------------------------------------------------------------
-#-------------------------------------------------------------------------
-# For Help building modules:
-# - Read the Documentation as it becomes available at
-#   http://dev.cmsmadesimple.org/
-# - Check out the Skeleton Module for a commented example
-# - Look at other modules, and learn from the source
-# - Check out the forums at http://forums.cmsmadesimple.org
-# - Chat with developers on the #cms IRC channel
+# Minify Module:
+# Copyright (c) 2013 Mike Crowe <drmikecrowe@gmail.com>
+# 
+# Minify:
+# Copyright (c) 2008 Ryan Grove <ryan@wonko.com>
+# Copyright (c) 2008 Steve Clay <steve@mrclay.org>
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+#   * Redistributions of source code must retain the above copyright notice,
+#     this list of conditions and the following disclaimer.
+#   * Redistributions in binary form must reproduce the above copyright notice,
+#     this list of conditions and the following disclaimer in the documentation
+#     and/or other materials provided with the distribution.
+#   * Neither the name of this project nor the names of its contributors may be
+#     used to endorse or promote products derived from this software without
+#     specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #-------------------------------------------------------------------------
 
 class Minify extends CMSModule {
 
-	function GetName() {
-		return 'Minify';
-	}
-
-	/* ---------------------------------------------------------
-	  GetFriendlyName()
-	  This can return any string, preferably a localized name
-	  of the module. This is the name that's shown in the
-	  Admin Menus and section pages (if the module has an admin
-	  component).
-
-	  See the note on localization at the top of this file.
-	  --------------------------------------------------------- */
-
-	function GetFriendlyName() {
-		return $this->Lang('friendlyname');
-	}
-
-	/* ---------------------------------------------------------
-	  GetVersion()
-	  This can return any string, preferably a number or
-	  something that makes sense for designating a version.
-	  The CMS will use this to identify whether or not
-	  the installed version of the module is current, and
-	  the module will use it to figure out how to upgrade
-	  itself if requested.
-	  --------------------------------------------------------- */
-
-	function GetVersion() {
-		return '0,9';
-	}
-
-	/* ---------------------------------------------------------
-	  GetHelp()
-	  This returns HTML information on the module.
-	  Typically, you'll want to include information on how to
-	  use the module.
-
-	  See the note on localization at the top of this file.
-	  --------------------------------------------------------- */
-
-	function GetHelp() {
-		return $this->Lang('help');
-	}
-
-	/* ---------------------------------------------------------
-	  GetAuthor()
-	  This returns a string that is presented in the Module
-	  Admin if you click on the "About" link.
-	  --------------------------------------------------------- */
-
-	function GetAuthor() {
-		return 'Mike Crowe';
-	}
-
-	/* ---------------------------------------------------------
-	  GetAuthorEmail()
-	  This returns a string that is presented in the Module
-	  Admin if you click on the "About" link. It helps users
-	  of your module get in touch with you to send bug reports,
-	  questions, cases of beer, and/or large sums of money.
-	  --------------------------------------------------------- */
-
-	function GetAuthorEmail() {
-		return 'drmikecrowe@gmail.com';
-	}
-
-	/* ---------------------------------------------------------
-	  GetChangeLog()
-	  This returns a string that is presented in the module
-	  Admin if you click on the About link. It helps users
-	  figure out what's changed between releases.
-	  See the note on localization at the top of this file.
-	  --------------------------------------------------------- */
-
-	function GetChangeLog() {
-		return $this->Lang('changelog');
-	}
-
-	/* ---------------------------------------------------------
-	  IsPluginModule()
-	  This function returns true or false, depending upon
-	  whether users can include the module in a page or
-	  template using a smarty tag of the form
-	  {cms_module module='Minify' param1=val param2=val...}
-
-	  If your module does not get included in pages or
-	  templates, return "false" here.
-	  --------------------------------------------------------- */
-
-	function IsPluginModule() {
-		return false;
-	}
-
-	/* ---------------------------------------------------------
-	  HasAdmin()
-	  This function returns a boolean value, depending on
-	  whether your module adds anything to the Admin area of
-	  the site. For the rest of these comments, I'll be calling
-	  the admin part of your module the "Admin Panel" for
-	  want of a better term.
-	  --------------------------------------------------------- */
-
-	function HasAdmin() {
-		return true;
-	}
-
-	/* ---------------------------------------------------------
-	  GetAdminSection()
-	  If your module has an Admin Panel, you can specify
-	  which Admin Section (or top-level Admin Menu) it shows
-	  up in. This method returns a string to specify that
-	  section. Valid return values are:
-
-	  main        - the Main menu tab.
-	  content     - the Content menu
-	  layout      - the Layout menu
-	  usersgroups - the Users and Groups menu
-	  extensions  - the Extensions menu (this is the default)
-	  siteadmin   - the Site Admin menu
-	  viewsite    - the View Site menu tab
-	  logout      - the Logout menu tab
-
-	  Note that if you place your module in the main,
-	  viewsite, or logout sections, it will show up in the
-	  menus, but will not be visible in any top-level
-	  section pages.
-	  --------------------------------------------------------- */
-
-	function GetAdminSection() {
-		return 'layout';
-	}
-
-	/* ---------------------------------------------------------
-	  GetAdminDescription()
-	  If your module does have an Admin Panel, you
-	  can have it return a description string that gets shown
-	  in the Admin Section page that contains the module.
-	  --------------------------------------------------------- */
-
-	function GetAdminDescription() {
-		return $this->Lang('admindescription');
-	}
-
-	/* ---------------------------------------------------------
-	  VisibleToAdminUser()
-	  If your module does have an Admin Panel, you
-	  can control whether or not it's displayed by the boolean
-	  that is returned by this method. This is primarily used
-	  to hide modules from admins who lack permission to use
-	  them.
-
-	  Typically, you'll use some permission to set this
-	  (e.g., $this->CheckPermission('Some Permission'); )
-	  --------------------------------------------------------- */
-
-	function VisibleToAdminUser() {
-		return true;
-	}
+	function GetName() 					{ return 'Minify'; } 
+	function GetFriendlyName() 			{ return $this->Lang('friendlyname'); } 
+	function GetVersion() 				{ return '0.9'; } 
+	function GetHelp() 					{ return $this->Lang('help'); } 
+	function GetAuthor() 				{ return 'Mike Crowe'; } 
+	function GetAuthorEmail() 			{ return 'drmikecrowe@gmail.com'; } 
+	function GetChangeLog() 			{ return $this->Lang('changelog'); } 
+	function IsPluginModule() 			{ return false; } 
+	function HasAdmin() 				{ return true; } 
+	function GetAdminSection() 			{ return 'layout'; } 
+	function GetAdminDescription() 		{ return $this->Lang('admindescription'); } 
+	function VisibleToAdminUser() 		{ return true; } 
 
 	/* ---------------------------------------------------------
 	  CheckAccess()
