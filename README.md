@@ -1,4 +1,4 @@
-cmsms_minify
+CMSMS Minify
 ============
 
 This project embeds [Minify 2.1.5](http://code.google.com/p/minify/) into CMS Made Simple.  From the Minify website:
