@@ -4,11 +4,13 @@ if (phpversion() < 5) {
 }
 
 // check for auto-encoding
-$encodeOutput = (function_exists('gzdeflate') && !ini_get('zlib.output_compression'));
+$encodeOutput = (function_exists('gzdeflate')
+                 && !ini_get('zlib.output_compression'));
 
 // recommend $min_symlinks setting for Apache UserDir
 $symlinkOption = '';
-if (0 === strpos($_SERVER["SERVER_SOFTWARE"], 'Apache/') && preg_match('@^/\\~(\\w+)/@', $_SERVER['REQUEST_URI'], $m)
+if (0 === strpos($_SERVER["SERVER_SOFTWARE"], 'Apache/')
+    && preg_match('@^/\\~(\\w+)/@', $_SERVER['REQUEST_URI'], $m)
 ) {
 	$userDir = DIRECTORY_SEPARATOR . $m[1] . DIRECTORY_SEPARATOR;
 	if (false !== strpos(__FILE__, $userDir)) {
@@ -29,7 +31,9 @@ if (!$min_enableBuilder) {
 	die('This application is not enabled. See http://code.google.com/p/minify/wiki/BuilderApp');
 }
 
-if (isset($min_builderPassword) && is_string($min_builderPassword) && $min_builderPassword !== '') {
+if (isset($min_builderPassword)
+        && is_string($min_builderPassword)
+        && $min_builderPassword !== '') {
 	DooDigestAuth::http_auth('Minify Builder', array('admin' => $min_builderPassword));
 }
 
@@ -45,9 +49,6 @@ ob_start();
 <title>Minify URI Builder</title>
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
 <style>
-	body {margin:1em 60px;}
-	h1, h2, h3 {margin-left:-25px; position:relative;}
-	h1 {margin-top:0;}
 	#sources {margin:0; padding:0;}
 	#sources li {margin:0 0 0 40px}
 	#sources li input {margin-left:2px}
@@ -81,8 +82,7 @@ ob_start();
 
 <?php if ($cachePathCode): ?>
 		<p class=topNote><strong>Note:</strong> <code><?php echo
-	htmlspecialchars($detectedTmp);
-	?></code> was discovered as a usable temp directory.<br>To
+    htmlspecialchars($detectedTmp); ?></code> was discovered as a usable temp directory.<br>To
 			slightly improve performance you can hardcode this in /min/config.php:
 			<code><?php echo htmlspecialchars($cachePathCode); ?></code></p>
 				<?php endIf; ?>

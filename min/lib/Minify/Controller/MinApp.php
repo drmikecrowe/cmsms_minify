@@ -21,6 +21,11 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
      */
     public function setupSources($options) {
         // filter controller options
+        foreach (array('g', 'b', 'f') as $key) {
+            if (isset($_GET[$key])) {
+                $_GET[$key] = str_replace("\x00", '', (string)$_GET[$key]);
+            }
+        }
         $cOptions = array_merge(
             array(
                 'allowDirs' => '//'
@@ -36,10 +41,6 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
         $firstMissingResource = null;
         
         if (isset($_GET['g'])) {
-            if (! is_string($_GET['g'])) {
-                $this->log("GET param 'g' was invalid");
-                return $options;
-            }
             // add group(s)
             $this->selectionId .= 'g=' . $_GET['g'];
             $keys = explode(',', $_GET['g']);
@@ -94,10 +95,6 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
             }
         }
         if (! $cOptions['groupsOnly'] && isset($_GET['f'])) {
-            if (! is_string($_GET['f'])) {
-                $this->log("GET param 'f' was invalid");
-                return $options;
-            }
             // try user files
             // The following restrictions are to limit the URLs that minify will
             // respond to.
@@ -126,8 +123,7 @@ class Minify_Controller_MinApp extends Minify_Controller_Base {
             }
             if (isset($_GET['b'])) {
                 // check for validity
-                if (is_string($_GET['b'])
-                    && preg_match('@^[^/]+(?:/[^/]+)*$@', $_GET['b'])
+                if (preg_match('@^[^/]+(?:/[^/]+)*$@', $_GET['b'])
                     && false === strpos($_GET['b'], '..')
                     && $_GET['b'] !== '.') {
                     // valid base

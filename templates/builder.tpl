@@ -1,6 +1,5 @@
 {literal}
 	<style>
-		body {margin:1em 60px;}
 		h1, h2, h3 {position:relative;}
 		h1 {margin-top:0;}
 		#sources {margin:0; padding:0;}
