@@ -21,7 +21,8 @@ $lang['title_minify_help'] = 'Minify Help';
 
 //Changlog
 $lang['changelog'] = '<ul>
-<li>Version 0,9 - 16 June 2013. Initial Release.</li>
+<li>Version 0.9.5 - 14 Dec 2013.  Moved to Version 2.1.7 of minify (increases performance).</li>
+<li>Version 0.9 - 16 June 2013. Initial Release.</li>
 </ul>';
 
 // Minify Help
